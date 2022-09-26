@@ -4,6 +4,9 @@ using UnityEngine;
 public sealed class PlayerSpaceship : Spaceship
 {
     [SerializeField] private float speedIncreaseValue = 0.025f;
+    [Space, SerializeField] private ParticleSystem playerShipDestroyParticles;
+
+    public static event EventHandler Died;
     
     protected override void Awake()
     {
@@ -12,17 +15,17 @@ public sealed class PlayerSpaceship : Spaceship
 
     private void OnEnable()
     {
-        Collectable.Collected += OnCollected;
+        Collectable.Collected += OnCollectedPoint;
     }
 
     private void OnDisable()
     {
-        Collectable.Collected -= OnCollected;
+        Collectable.Collected -= OnCollectedPoint;
     }
 
-    private void Start()
+    protected override void Start()
     {
-
+        base.Start();
     }
 
     protected override void Update()
@@ -34,22 +37,28 @@ public sealed class PlayerSpaceship : Spaceship
     {
         var collidedObject = col.gameObject;
         
-        if (collidedObject.CompareTag("Collectable"))
+        if (collidedObject.CompareTag("Collectible"))
         {
             collidedObject.GetComponent<Collectable>().GetCollected();
         }
-        else if (collidedObject.CompareTag("Spaceship"))
+        else if (collidedObject.CompareTag("EnemySpaceship"))
         {
-            // TODO: game over
-            
-            Debug.Log("game over");
+            Die();
         }
     }
-    
-    private void OnCollected(object sender, EventArgs e)
+
+    private void OnCollectedPoint(object sender, EventArgs e)
     {
         movementSpeed += speedIncreaseValue;
         rotationSpeed += speedIncreaseValue;
+    }
+
+    private void Die()
+    {
+        Instantiate(playerShipDestroyParticles, transform.position, Quaternion.identity);
+        
+        Died?.Invoke(this, EventArgs.Empty);
+        Destroy(gameObject);
     }
 
 }

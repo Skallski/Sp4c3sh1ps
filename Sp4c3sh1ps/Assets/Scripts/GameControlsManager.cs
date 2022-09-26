@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public sealed class Controls : MonoBehaviour
+public sealed class GameControlsManager : MonoBehaviour
 {
-    public static Controls Self { get; private set; }
+    public static GameControlsManager Self { get; private set; }
 
     [field: SerializeField] public bool Left { get; set; }
     [field: SerializeField] public bool Right { get; set; }

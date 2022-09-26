@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Collectable
-  - Spaceship
+  - Collectible
+  - EnemySpaceship
   layers:
   - Default
   - TransparentFX

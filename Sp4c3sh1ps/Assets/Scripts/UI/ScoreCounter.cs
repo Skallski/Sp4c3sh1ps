@@ -5,40 +5,54 @@ using UnityEngine;
 public class ScoreCounter : MonoBehaviour
 {
     private TextMeshProUGUI scoreTmp;
-    private int counter = 0;
+    public static int CurrentScore { get; private set; } = 0;
+    public static int HighScore { get; private set; } = 0;
 
-    private void Awake()
-    {
-        scoreTmp = GetComponent<TextMeshProUGUI>();
-    }
+    public static event EventHandler ScoreSubmited;
+    
+    private void Awake() => scoreTmp = GetComponent<TextMeshProUGUI>();
 
     private void OnEnable()
     {
-        Collectable.Collected += OnCollected;
+        MenuSplashScreen.Self.GameStarted += OnGameStarted;
+        Collectable.Collected += OnPlayerCollectedPoint;
+        PlayerSpaceship.Died += OnPlayerDied;
     }
 
     private void OnDisable()
     {
-        Collectable.Collected -= OnCollected;
+        MenuSplashScreen.Self.GameStarted -= OnGameStarted;
+        Collectable.Collected -= OnPlayerCollectedPoint;
+        PlayerSpaceship.Died -= OnPlayerDied;
     }
 
-    private void Start()
+    private void OnGameStarted(object sender, EventArgs e)
     {
-        counter = 0;
-        scoreTmp.SetText(counter.ToString());
-    }
-
-    private void Update()
-    {
-
+        CurrentScore = 0;
+        scoreTmp.SetText(CurrentScore.ToString());
     }
     
-    private void OnCollected(object sender, EventArgs e)
+    private void OnPlayerCollectedPoint(object sender, EventArgs e)
     {
-        counter += 1;
-        scoreTmp.SetText(counter.ToString());
+        CurrentScore += 1;
+        scoreTmp.SetText(CurrentScore.ToString());
 
-        if (counter % 5 == 0) EntitySpawner.Self.SpawnEnemy(ScreenBounds.Self.GetRandomScreenPosition(), Quaternion.identity);
+        if (CurrentScore % 5 == 0)
+            EntitySpawner.Self.SpawnEnemy(ScreenBounds.Self.GetRandomScreenPosition(), Quaternion.identity);
     }
-
+    
+    private void OnPlayerDied(object sender, EventArgs e)
+    {
+        PlayerPrefs.SetInt("lastScore", CurrentScore);
+        
+        if (CurrentScore > HighScore)
+        {
+            HighScore = CurrentScore;
+            PlayerPrefs.SetInt("highscore", HighScore);
+        }
+        
+        ScoreSubmited?.Invoke(this, EventArgs.Empty);
+        scoreTmp.SetText(string.Empty);
+    }
+    
 }
