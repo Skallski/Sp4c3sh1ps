@@ -7,7 +7,7 @@ public sealed class ScreenBounds : MonoBehaviour
     
     [SerializeField] private float wrapOffset = 0.2f;
     private Camera mainCamera;
-    private BoxCollider2D boundingBox;
+    public BoxCollider2D BoundingBox { get; private set; }
 
     private void Awake()
     {
@@ -20,8 +20,8 @@ public sealed class ScreenBounds : MonoBehaviour
             Self = this;
             
             mainCamera = Camera.main;
-            boundingBox = GetComponent<BoxCollider2D>();
-            boundingBox.isTrigger = true; // bounding box has to be trigger
+            BoundingBox = GetComponent<BoxCollider2D>();
+            BoundingBox.isTrigger = true; // bounding box has to be trigger
         }
     }
 
@@ -31,7 +31,17 @@ public sealed class ScreenBounds : MonoBehaviour
         
         // set bounds size
         var y = mainCamera.orthographicSize * 2;
-        boundingBox.size = new Vector2(y * mainCamera.aspect, y);
+        BoundingBox.size = new Vector2(y * mainCamera.aspect, y);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public Vector2 GetRandomScreenPosition()
+    {
+        var bBox = BoundingBox.size;
+        return new Vector2(Random.Range(-bBox.x * 0.5f, bBox.x * 0.5f), Random.Range(-bBox.y * 0.5f, bBox.y * 0.5f));
     }
 
     /// <summary>
@@ -41,8 +51,8 @@ public sealed class ScreenBounds : MonoBehaviour
     /// <returns> bool value that determines whether provided position is out of screen bounds </returns>
     public bool IsOutOfBounds(Vector3 worldPos)
     {
-        return Mathf.Abs(worldPos.x) > Mathf.Abs(boundingBox.bounds.min.x)
-               || Mathf.Abs(worldPos.y) > Mathf.Abs(boundingBox.bounds.min.y);
+        return Mathf.Abs(worldPos.x) > Mathf.Abs(BoundingBox.bounds.min.x)
+               || Mathf.Abs(worldPos.y) > Mathf.Abs(BoundingBox.bounds.min.y);
     }
 
     /// <summary>
@@ -67,27 +77,27 @@ public sealed class ScreenBounds : MonoBehaviour
 
         if (Mathf.Abs(warpedPosition.x) > Mathf.Abs(warpedPosition.y))
         {
-            if (Mathf.Abs(warpedPosition.x) > boundingBox.size.x * 0.5f)
+            if (Mathf.Abs(warpedPosition.x) > BoundingBox.size.x * 0.5f)
             {
-                div = (boundingBox.size.x * 0.5f) / Mathf.Abs(warpedPosition.x);
+                div = (BoundingBox.size.x * 0.5f) / Mathf.Abs(warpedPosition.x);
                 warpedPosition *= div;
             }
-            if (Mathf.Abs(warpedPosition.y) > boundingBox.size.y * 0.5f)
+            if (Mathf.Abs(warpedPosition.y) > BoundingBox.size.y * 0.5f)
             {
-                div = (boundingBox.size.y * 0.5f) / Mathf.Abs(warpedPosition.y);
+                div = (BoundingBox.size.y * 0.5f) / Mathf.Abs(warpedPosition.y);
                 warpedPosition *= div;
             }
         }
         else
         {
-            if (Mathf.Abs(warpedPosition.y) > boundingBox.size.y * 0.5f)
+            if (Mathf.Abs(warpedPosition.y) > BoundingBox.size.y * 0.5f)
             {
-                div = (boundingBox.size.y * 0.5f) / Mathf.Abs(warpedPosition.y);
+                div = (BoundingBox.size.y * 0.5f) / Mathf.Abs(warpedPosition.y);
                 warpedPosition *= div;
             }
-            if (Mathf.Abs(warpedPosition.x) > boundingBox.size.x * 0.5f)
+            if (Mathf.Abs(warpedPosition.x) > BoundingBox.size.x * 0.5f)
             {
-                div = (boundingBox.size.x * 0.5f) / Mathf.Abs(warpedPosition.x);
+                div = (BoundingBox.size.x * 0.5f) / Mathf.Abs(warpedPosition.x);
                 warpedPosition *= div;
             }
         }

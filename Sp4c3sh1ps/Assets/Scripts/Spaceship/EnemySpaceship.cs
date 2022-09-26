@@ -4,9 +4,9 @@ using UnityEngine;
 
 public sealed class EnemySpaceship : Spaceship
 {
-    private void Awake()
+    protected override void Awake()
     {
-
+        base.Awake();
     }
 
     private void Start()
@@ -14,10 +14,17 @@ public sealed class EnemySpaceship : Spaceship
 
     }
 
-    private void Update()
+    protected override void Update()
     {
-
+        base.Update();
     }
 
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Spaceship"))
+        {
+            Destroy(gameObject);
+        }
+    }
     
 } 

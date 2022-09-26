@@ -14,6 +14,8 @@ public sealed class EntitySpawner : MonoBehaviour
             Self = this;
     }
 
-    public GameObject Spawn(GameObject prefab, Vector2 position, Quaternion rotation) => Instantiate(prefab, position, rotation);
-    
+    private static GameObject Spawn(GameObject prefab, Vector2 position, Quaternion rotation) => Instantiate(prefab, position, rotation);
+
+    public GameObject SpawnEnemy(Vector2 position, Quaternion rotation) => Spawn(enemySpaceshipPrefab, position, rotation);
+
 }

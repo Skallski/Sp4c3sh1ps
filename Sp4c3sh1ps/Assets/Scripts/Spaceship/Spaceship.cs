@@ -5,8 +5,8 @@ public abstract class Spaceship : MonoBehaviour
     private Controls controls;
     private ScreenBounds screenBounds;
     
-    [SerializeField] private float movementSpeed = 2;
-    [SerializeField] private float rotationSpeed = 2;
+    [SerializeField] protected float movementSpeed = 2;
+    [SerializeField] protected float rotationSpeed = 2;
 
     protected virtual void Awake()
     {
