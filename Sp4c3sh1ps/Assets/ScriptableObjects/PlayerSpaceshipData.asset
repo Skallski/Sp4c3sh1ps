@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8932fff46c845a99b7ae6206b683621, type: 3}
+  m_Name: PlayerSpaceshipData
+  m_EditorClassIdentifier: 
+  _startMovementSpeed: 2
+  _startRotationSpeed: 2
+  _destroyParticles: {fileID: 274467426301808068, guid: cab71e652cbfe5547ad89ad3e9b2b08d, type: 3}

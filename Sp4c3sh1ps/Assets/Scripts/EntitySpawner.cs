@@ -5,8 +5,8 @@ public sealed class EntitySpawner : MonoBehaviour
 {
     public static EntitySpawner Self { get; private set; }
 
-    [SerializeField] private GameObject playerSpaceshipPrefab;
-    [SerializeField] private GameObject enemySpaceshipPrefab;
+    [SerializeField] private GameObject _playerSpaceshipPrefab;
+    [SerializeField] private GameObject _enemySpaceshipPrefab;
 
     private void Awake()
     {
@@ -31,8 +31,8 @@ public sealed class EntitySpawner : MonoBehaviour
     
     private static GameObject Spawn(GameObject prefab, Vector2 position, Quaternion rotation) => Instantiate(prefab, position, rotation);
     
-    private void SpawnPlayer() => Spawn(playerSpaceshipPrefab, Vector2.zero, Quaternion.identity);
+    private void SpawnPlayer() => Spawn(_playerSpaceshipPrefab, Vector2.zero, Quaternion.identity);
     
-    public GameObject SpawnEnemy(Vector2 position, Quaternion rotation) => Spawn(enemySpaceshipPrefab, position, rotation);
+    public GameObject SpawnEnemy(Vector2 position, Quaternion rotation) => Spawn(_enemySpaceshipPrefab, position, rotation);
 
 }

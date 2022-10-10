@@ -2,9 +2,9 @@
 
 public abstract class SplashScreen : MonoBehaviour
 {
-    [SerializeField] private GameObject contentObject;
+    [SerializeField] private GameObject _contentObject;
 
-    protected void OpenSelf() => contentObject.SetActive(true);
-    protected void CloseSelf() => contentObject.SetActive(false);
+    protected virtual void OpenSelf() => _contentObject.SetActive(true);
+    protected virtual void CloseSelf() => _contentObject.SetActive(false);
     
 }

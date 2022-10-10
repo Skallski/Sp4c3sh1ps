@@ -1,11 +1,12 @@
+using SkalluUtils.PropertyAttributes;
 using UnityEngine;
 
 public sealed class GameControlsManager : MonoBehaviour
 {
     public static GameControlsManager Self { get; private set; }
 
-    [field: SerializeField] public bool Left { get; set; }
-    [field: SerializeField] public bool Right { get; set; }
+    [field: SerializeField, ReadOnlyInspector] public bool Left { get; set; }
+    [field: SerializeField, ReadOnlyInspector] public bool Right { get; set; }
 
     private void Awake()
     {

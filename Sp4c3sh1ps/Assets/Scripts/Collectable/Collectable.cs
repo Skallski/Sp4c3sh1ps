@@ -1,26 +1,19 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class Collectable : MonoBehaviour
+public abstract class Collectable : MonoBehaviour
 {
-    private ScreenBounds screenBounds;
+    private ScreenBounds _screenBounds;
 
-    public static event EventHandler Collected;
+    protected virtual void Awake() => _screenBounds = ScreenBounds.Self;
+
+    protected virtual void Start() => transform.position = _screenBounds.GetRandomScreenPosition();
     
-    private void Awake() => screenBounds = ScreenBounds.Self;
+    protected virtual void GetCollected() => transform.position = _screenBounds.GetRandomScreenPosition();
 
-    private void Start() => transform.position = screenBounds.GetRandomScreenPosition();
-
-    private void Update()
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        
-    }
-
-    public virtual void GetCollected()
-    {
-        transform.position = screenBounds.GetRandomScreenPosition();
-        Collected?.Invoke(this, EventArgs.Empty);
+        if (col.CompareTag("Player")) GetCollected();
     }
     
-} 
+}

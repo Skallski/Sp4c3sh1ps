@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public sealed class EnemySpaceship : Spaceship
 {
-    [Space, SerializeField] private ParticleSystem enemyShipDestroyParticles;
-    
+    public static readonly List<EnemySpaceship> Enemies = new List<EnemySpaceship>();
+
     protected override void Awake()
     {
+        Enemies.Add(this);
+        
         base.Awake();
     }
 
@@ -30,12 +33,14 @@ public sealed class EnemySpaceship : Spaceship
             Die();
     }
 
-    private void Die()
+    protected override void Die()
     {
-        Instantiate(enemyShipDestroyParticles, transform.position, Quaternion.identity);
+        base.Die();
+        
+        Enemies.Remove(this);
         Destroy(gameObject);
     }
 
     private void OnPlayerDied(object sender, EventArgs e) => Destroy(gameObject);
     
-} 
+}

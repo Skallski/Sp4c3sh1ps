@@ -2,18 +2,23 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuSplashScreen : SplashScreen
 {
     public static MenuSplashScreen Self { get; private set; }
     
-    [SerializeField] private TextMeshProUGUI lastScoreTmp, highScoreTmp;
-    private Animator animator;
-    private const string AppearAnim = "MenuSplash_appear";
-    private const string DisappearAnim = "MenuSplash_disappear";
-    private Coroutine disappearCoroutine;
-    private WaitForSeconds hideDelay = new WaitForSeconds(0.5f);
-    
+    [SerializeField] private TextMeshProUGUI _lastScoreTmp, _highScoreTmp;
+    private Button _startGameButton;
+
+    #region ANIMATION RELATED FIELDS
+    private Animator _animator;
+    private const string APPEAR_ANIM = "MenuSplash_appear";
+    private const string DISAPPEAR_ANIM = "MenuSplash_disappear";
+    private Coroutine _disappearCoroutine;
+    private readonly WaitForSeconds _hideDelay = new WaitForSeconds(0.5f);
+    #endregion
+
     public event EventHandler GameStarted;
 
     private void Awake()
@@ -26,48 +31,51 @@ public class MenuSplashScreen : SplashScreen
         {
             Self = this;
 
-            animator = GetComponent<Animator>();
+            _animator = GetComponent<Animator>();
+            _startGameButton = GetComponentInChildren<Button>();
         }
     }
+    
+    private void OnEnable() => ScoreCounter.ScoreSubmited += OnScoreSubmitted;
 
+    private void OnDisable() => ScoreCounter.ScoreSubmited -= OnScoreSubmitted;
+    
     private void Start()
     {
         SetScoreTmp();
         
-        animator.Play(AppearAnim);
+        _animator.Play(APPEAR_ANIM);
     }
-
-    private void OnEnable() => ScoreCounter.ScoreSubmited += OnScoreSubmitted;
-
-    private void OnDisable() => ScoreCounter.ScoreSubmited -= OnScoreSubmitted;
 
     private void OnScoreSubmitted(object sender, EventArgs e)
     {
         SetScoreTmp();
         
         OpenSelf();
-        animator.Play(AppearAnim);
+        _animator.Play(APPEAR_ANIM);
+        _startGameButton.gameObject.SetActive(true); // activate "game start" button
     }
 
     public void StartGame()
     {
-        if (disappearCoroutine != null) StopCoroutine(disappearCoroutine);
-        disappearCoroutine = StartCoroutine(Disappear());
+        if (_disappearCoroutine != null) StopCoroutine(_disappearCoroutine);
+        _disappearCoroutine = StartCoroutine(Disappear());
         
         GameStarted?.Invoke(this, EventArgs.Empty);
+        _startGameButton.gameObject.SetActive(false); // deactivate "game start" button
     }
 
     private IEnumerator Disappear()
     {
-        animator.Play(DisappearAnim);
-        yield return hideDelay;
+        _animator.Play(DISAPPEAR_ANIM);
+        yield return _hideDelay;
         CloseSelf();
     }
 
     private void SetScoreTmp()
     {
-        lastScoreTmp.SetText("Last Score: " + PlayerPrefs.GetInt("lastScore"));
-        highScoreTmp.SetText("Highscore: " + PlayerPrefs.GetInt("highscore"));
+        _lastScoreTmp.SetText("Last Score: " + PlayerPrefs.GetInt("lastScore"));
+        _highScoreTmp.SetText("Highscore: " + PlayerPrefs.GetInt("highscore"));
     }
 
 }

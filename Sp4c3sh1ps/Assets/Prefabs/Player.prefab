@@ -5030,10 +5030,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd56de1e57144336b127d48d7137587f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 2
-  rotationSpeed: 2
-  speedIncreaseValue: 0.05
-  playerShipDestroyParticles: {fileID: 274467426301808068, guid: cab71e652cbfe5547ad89ad3e9b2b08d, type: 3}
+  _spaceshipData: {fileID: 11400000, guid: bb00adb6cf342ab4ab51ef9adb330dec, type: 2}
+  _movementSpeed: 0
+  _rotationSpeed: 0
+  _speedIncreaseValue: 0.025
 --- !u!1 &3292822415168170806
 GameObject:
   m_ObjectHideFlags: 0
