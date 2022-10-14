@@ -9,7 +9,7 @@ public abstract class Spaceship : MonoBehaviour
     [SerializeField] protected SpaceshipData _spaceshipData;
     [SerializeField, ReadOnlyInspector] protected float _movementSpeed, _rotationSpeed;
 
-    protected bool canMove = true;
+    public bool canMove = true;
 
     protected virtual void Awake()
     {
@@ -42,6 +42,6 @@ public abstract class Spaceship : MonoBehaviour
         if (_gameControlsManager.Right) transform.eulerAngles -= new Vector3(0, 0, 45 * (_rotationSpeed * Time.deltaTime));
     }
 
-    protected virtual void Die() => Instantiate(_spaceshipData.DestroyParticles, transform.position, Quaternion.identity);
+    public virtual void Die() => Instantiate(_spaceshipData.DestroyParticles, transform.position, Quaternion.identity);
     
 }

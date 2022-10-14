@@ -27,7 +27,6 @@ public sealed class EntitySpawner : MonoBehaviour
     }
     
     private void OnGameStarted(object sender, EventArgs e) => SpawnPlayer();
-
     
     private static GameObject Spawn(GameObject prefab, Vector2 position, Quaternion rotation) => Instantiate(prefab, position, rotation);
     

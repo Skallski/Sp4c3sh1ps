@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using SkalluUtils.PropertyAttributes;
 using UnityEngine;
 
@@ -6,14 +7,18 @@ public class PowerUp : Collectable
 {
     private GameObject _powerUpObject;
     private SpriteRenderer _sr;
-    
+
+    #region INSPECTOR FIELDS
     [SerializeField, ReadOnlyInspector] private float _disappearTimer, _respawnTimer;
-    
+    [SerializeField] private List<PowerUpData> _availablePowerUps = new List<PowerUpData>();
+    [SerializeField, ReadOnlyInspector] private PowerUpData _currentPowerUp;
+    #endregion
+   
+    #region DISAPPEAR AND RESPAWN RELATED FIELDS
     private readonly WaitForSeconds _disappearDelay = new WaitForSeconds(2f);
     private Coroutine _disappearCoroutine;
     private Coroutine _respawnCoroutine;
-
-    private Color _startColor;
+    #endregion
 
     protected override void Awake()
     {
@@ -27,7 +32,6 @@ public class PowerUp : Collectable
     {
         base.Start();
         
-        _startColor = _sr.color;
         Disappear();
     }
 
@@ -35,17 +39,25 @@ public class PowerUp : Collectable
     {
         if (!_powerUpObject.activeSelf) return;
 
+        _currentPowerUp.ApplyPowerUp();
+        _currentPowerUp = null;
         base.GetCollected();
-        
+
         StopCoroutine(_disappearCoroutine);
         Respawn();
+    }
+
+    private void SetPowerUp()
+    {
+        _currentPowerUp = _availablePowerUps[Random.Range(0, _availablePowerUps.Count)];
+        _sr.color = _currentPowerUp.PowerUpColor;
     }
 
     #region DISAPPEAR
     private void Disappear()
     {
-        _sr.color = _startColor;
-        
+        SetPowerUp();
+
         if (_disappearCoroutine != null)
             StopCoroutine(_disappearCoroutine);
         
@@ -57,7 +69,6 @@ public class PowerUp : Collectable
         yield return _disappearDelay;
         
         _disappearTimer = 5;
-        _startColor = _sr.color;
 
         while (_disappearTimer > 0)
         {
@@ -93,9 +104,8 @@ public class PowerUp : Collectable
             _respawnTimer -= Time.deltaTime;
             yield return null;
         }
-
-        _respawnTimer = 0;
         
+        _respawnTimer = 0;
         _powerUpObject.SetActive(true);
         Disappear();
     }

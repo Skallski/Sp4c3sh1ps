@@ -3,7 +3,10 @@ using UnityEngine;
 
 public sealed class PlayerSpaceship : Spaceship
 {
-    [SerializeField] private float _speedIncreasePerPoint = 0.025f;
+    private const float SPEED_INCREASE_PER_POINT = 0.025f;
+    public const int MAX_LIVES = 3;
+    
+    [SerializeField] private int _currentLives = 1;
 
     public static event EventHandler Died;
     
@@ -35,16 +38,24 @@ public sealed class PlayerSpaceship : Spaceship
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("EnemySpaceship"))
-            Die();
+            TakeDamage();
     }
 
     private void OnCollectedPoint(object sender, EventArgs e)
     {
-        _movementSpeed += _speedIncreasePerPoint;
-        _rotationSpeed += _speedIncreasePerPoint;
+        _movementSpeed += SPEED_INCREASE_PER_POINT;
+        _rotationSpeed += SPEED_INCREASE_PER_POINT;
     }
 
-    protected override void Die()
+    private void TakeDamage()
+    {
+        _currentLives -= 1;
+
+        if (_currentLives <= 0)
+            Die();
+    }
+
+    public override void Die()
     {
         base.Die();
         

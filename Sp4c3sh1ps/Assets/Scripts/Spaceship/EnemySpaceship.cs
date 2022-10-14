@@ -29,11 +29,11 @@ public sealed class EnemySpaceship : Spaceship
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("EnemySpaceship"))
+        if (col.CompareTag("EnemySpaceship") || col.CompareTag("Player"))
             Die();
     }
 
-    protected override void Die()
+    public override void Die()
     {
         base.Die();
         
@@ -42,5 +42,5 @@ public sealed class EnemySpaceship : Spaceship
     }
 
     private void OnPlayerDied(object sender, EventArgs e) => Destroy(gameObject);
-    
+
 }

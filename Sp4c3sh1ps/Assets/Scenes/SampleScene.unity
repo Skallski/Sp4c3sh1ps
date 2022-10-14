@@ -1045,7 +1045,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7699419448533781029, guid: f0870f24908cd9740b0852de55693bcc, type: 3}
       propertyPath: m_Name
-      value: Collectable
+      value: Point
       objectReference: {fileID: 0}
     - target: {fileID: 7699419448533781031, guid: f0870f24908cd9740b0852de55693bcc, type: 3}
       propertyPath: m_RootOrder
@@ -1377,7 +1377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerSpaceshipPrefab: {fileID: 2220986696554848057, guid: 9e40521a16348714abcb89796344c58d, type: 3}
-  _enemySpaceshipPrefab: {fileID: 274467426301808070, guid: 3eb48a608d30b4c4ba5d246ea92c06d2, type: 3}
+  _enemySpaceshipPrefab: {fileID: 6996066553413292629, guid: 46de02227857ae745b0b7cf41f378aa0, type: 3}
 --- !u!4 &1075942189
 Transform:
   m_ObjectHideFlags: 0
@@ -2490,7 +2490,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2024786846
 GameObject:
@@ -2667,11 +2667,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3988032453725730569, guid: 53841ec77e041fc4183651405bb5a6ea, type: 3}
       propertyPath: m_Name
-      value: CollectablePowerUp
+      value: PowerUp
       objectReference: {fileID: 0}
     - target: {fileID: 3988032453725730571, guid: 53841ec77e041fc4183651405bb5a6ea, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3988032453725730571, guid: 53841ec77e041fc4183651405bb5a6ea, type: 3}
       propertyPath: m_LocalPosition.x
