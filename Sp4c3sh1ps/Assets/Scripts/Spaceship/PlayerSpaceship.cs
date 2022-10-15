@@ -5,13 +5,12 @@ using UnityEngine;
 public sealed class PlayerSpaceship : Spaceship
 {
     public static PlayerSpaceship Instance { get; private set; }
-
+    
     [ReadOnlyInspector] public bool isInvincible = false;
     private const float SPEED_INCREASE_PER_POINT = 0.025f;
 
     public static event EventHandler Died;
-    public static event EventHandler LostInvincibility;
-    
+
     protected override void Awake()
     {
         if (Instance != null && Instance != this)
@@ -26,15 +25,9 @@ public sealed class PlayerSpaceship : Spaceship
         }
     }
 
-    private void OnEnable()
-    {
-        Point.Collected += OnCollectedPoint;
-    }
+    private void OnEnable() => Point.Collected += OnCollectedPoint;
 
-    private void OnDisable()
-    {
-        Point.Collected -= OnCollectedPoint;
-    }
+    private void OnDisable() => Point.Collected -= OnCollectedPoint;
 
     protected override void Start()
     {
@@ -48,22 +41,16 @@ public sealed class PlayerSpaceship : Spaceship
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag("EnemySpaceship"))
-            TakeDamage();
+        if (col.CompareTag("EnemySpaceship") && !isInvincible)
+            Die();
     }
 
     private void OnCollectedPoint(object sender, EventArgs e)
     {
-        MovementSpeed += SPEED_INCREASE_PER_POINT;
-        RotationSpeed += SPEED_INCREASE_PER_POINT;
-    }
+        var speedIncrease = isSlowedDown ? SPEED_INCREASE_PER_POINT * 0.5f : SPEED_INCREASE_PER_POINT;
 
-    private void TakeDamage()
-    {
-        if (!isInvincible)
-            Die();
-        else
-            isInvincible = false;
+        MovementSpeed += speedIncrease;
+        RotationSpeed += speedIncrease;
     }
 
     public override void Die()

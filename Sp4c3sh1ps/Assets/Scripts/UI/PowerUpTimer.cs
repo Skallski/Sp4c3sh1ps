@@ -30,7 +30,7 @@ public class PowerUpTimer : MonoBehaviour
     
     private void OnPlayerDied(object sender, EventArgs e) => Hide();
 
-    private void Hide() => _tmp.SetText(string.Empty);
+    public void Hide() => _tmp.SetText(string.Empty);
 
     public void SetTimer(int time) => _tmp.SetText(time.ToString());
 }

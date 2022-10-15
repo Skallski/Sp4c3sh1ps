@@ -10,7 +10,9 @@ public abstract class Spaceship : MonoBehaviour
     [field: SerializeField, ReadOnlyInspector] public float MovementSpeed { get; set; }
     [field: SerializeField, ReadOnlyInspector] public float RotationSpeed { get; set; }
 
-    public bool canMove = true;
+    [Space]
+    [ReadOnlyInspector] public bool canMove = true;
+    [ReadOnlyInspector] public bool isSlowedDown = false;
 
     protected virtual void Awake()
     {

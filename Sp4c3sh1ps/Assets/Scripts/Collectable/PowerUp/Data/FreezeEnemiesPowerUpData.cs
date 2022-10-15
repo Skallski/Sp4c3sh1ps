@@ -11,7 +11,7 @@ public class FreezeEnemiesPowerUpData : TimeBasedPowerUpData
         if (_size == 0) return;
 
         var powerUpManager = PowerUpManager.Instance;
-        powerUpManager.StartPowerUp(StartTimeBasedPowerUp(Freeze, Unfreeze), this);
+        powerUpManager.StartPowerUp(StartTimeBasedPowerUp(Freeze, Unfreeze));
     }
 
     private void Freeze()

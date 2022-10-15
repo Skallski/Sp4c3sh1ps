@@ -10,7 +10,7 @@ public class ForceShieldPowerUpData : TimeBasedPowerUpData
         _playerSpaceship = PlayerSpaceship.Instance;
 
         var powerUpManager = PowerUpManager.Instance;
-        powerUpManager.StartPowerUp(StartTimeBasedPowerUp(Enable, Disable), this);
+        powerUpManager.StartPowerUp(StartTimeBasedPowerUp(Enable, Disable));
     }
 
     private void Enable() => _playerSpaceship.isInvincible = true;

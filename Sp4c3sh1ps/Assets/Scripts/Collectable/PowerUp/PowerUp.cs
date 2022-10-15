@@ -16,8 +16,8 @@ public class PowerUp : Collectable
    
     #region DISAPPEAR AND RESPAWN RELATED FIELDS
     private readonly WaitForSeconds _disappearDelay = new WaitForSeconds(2f);
-    private const float RESPAWN_TIME = 1; // 20
-    private const float DISAPPEAR_TIME = 20; // 5
+    private const float RESPAWN_TIME = 20;
+    private const float DISAPPEAR_TIME = 5;
     
     private Coroutine _disappearCoroutine;
     private Coroutine _respawnCoroutine;

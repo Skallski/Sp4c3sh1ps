@@ -11,7 +11,7 @@ public abstract class TimeBasedPowerUpData : PowerUpData
     
     protected IEnumerator StartTimeBasedPowerUp(Action before, Action after)
     {
-        before.Invoke(); // execute instruction before wait time
+        before.Invoke(); // execute action before wait time
 
         // wait
         _timer = _duration;
@@ -22,8 +22,9 @@ public abstract class TimeBasedPowerUpData : PowerUpData
             
             PowerUpTimer.Instance.SetTimer((int)_timer);
         }
+        PowerUpTimer.Instance.Hide();
         
-        after.Invoke(); // execute instruction after wait time
+        after.Invoke(); // execute action after wait time
     }
 
 }
