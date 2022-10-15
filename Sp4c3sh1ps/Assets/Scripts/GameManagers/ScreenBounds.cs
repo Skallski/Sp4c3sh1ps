@@ -3,7 +3,7 @@
 [RequireComponent(typeof(BoxCollider2D))]
 public sealed class ScreenBounds : MonoBehaviour
 {
-    public static ScreenBounds Self { get; private set; }
+    public static ScreenBounds Instance { get; private set; }
     
     [SerializeField] private float _wrapOffset = 0.2f;
     private Camera _mainCam;
@@ -11,13 +11,13 @@ public sealed class ScreenBounds : MonoBehaviour
 
     private void Awake()
     {
-        if (Self != null && Self != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
-            Self = this;
+            Instance = this;
             
             _mainCam = Camera.main;
             _boundingBox = GetComponent<BoxCollider2D>();

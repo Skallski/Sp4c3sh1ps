@@ -1,37 +1,33 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewPowerUpData", menuName = "Power Up/Freeze Enemies")]
-public class FreezeEnemiesPowerUpData : PowerUpData
+public class FreezeEnemiesPowerUpData : TimeBasedPowerUpData
 {
-    private WaitForSeconds _freezeTimeDuration;
-
-    private void Awake() => _freezeTimeDuration = new WaitForSeconds(Duration);
-
+    private int _size;
+    
     public override void ApplyPowerUp()
     {
-        // makes enemies immovable for 5 seconds
-        var size = EnemySpaceship.Enemies.Count;
-        if (size == 0) return;
-        
-        for (var i = 0; i < size; i++)
-        {
-            var enemy = EnemySpaceship.Enemies[i];
-            enemy.StartCoroutine(FreezeEnemy(enemy));
-        }
+        _size = EnemySpaceship.Enemies.Count;
+        if (_size == 0) return;
+
+        var powerUpManager = PowerUpManager.Instance;
+        powerUpManager.StartPowerUp(StartTimeBasedPowerUp(Freeze, Unfreeze), this);
     }
 
-    /// <summary>
-    /// Makes enemy immovable for some time
-    /// </summary>
-    /// <param name="enemySpaceship"> enemy spaceship to freeze </param>
-    /// <returns></returns>
-    private IEnumerator FreezeEnemy(EnemySpaceship enemySpaceship)
+    private void Freeze()
     {
-        enemySpaceship.canMove = false;
-        yield return _freezeTimeDuration;
-        enemySpaceship.canMove = true;
+        for (int i = 0; i < _size; i++)
+        {
+            EnemySpaceship.Enemies[i].canMove = false;
+        }
+    }
+    
+    private void Unfreeze()
+    {
+        for (int i = 0; i < _size; i++)
+        {
+            EnemySpaceship.Enemies[i].canMove = true;
+        }
     }
 
 } 

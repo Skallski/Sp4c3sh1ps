@@ -16,6 +16,9 @@ public class PowerUp : Collectable
    
     #region DISAPPEAR AND RESPAWN RELATED FIELDS
     private readonly WaitForSeconds _disappearDelay = new WaitForSeconds(2f);
+    private const float RESPAWN_TIME = 1; // 20
+    private const float DISAPPEAR_TIME = 20; // 5
+    
     private Coroutine _disappearCoroutine;
     private Coroutine _respawnCoroutine;
     #endregion
@@ -64,7 +67,7 @@ public class PowerUp : Collectable
     {
         yield return _disappearDelay;
         
-        _disappearTimer = 5;
+        _disappearTimer = DISAPPEAR_TIME;
 
         while (_disappearTimer > 0)
         {
@@ -90,7 +93,7 @@ public class PowerUp : Collectable
 
     private IEnumerator RespawnRoutine()
     {
-        _respawnTimer = 10;
+        _respawnTimer = RESPAWN_TIME;
         _powerUpObject.SetActive(false);
 
         while (_respawnTimer > 0)

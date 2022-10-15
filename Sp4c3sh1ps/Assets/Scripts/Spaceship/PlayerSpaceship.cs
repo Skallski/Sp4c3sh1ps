@@ -1,16 +1,16 @@
 ﻿using System;
+using SkalluUtils.PropertyAttributes;
 using UnityEngine;
 
 public sealed class PlayerSpaceship : Spaceship
 {
     public static PlayerSpaceship Instance { get; private set; }
 
+    [ReadOnlyInspector] public bool isInvincible = false;
     private const float SPEED_INCREASE_PER_POINT = 0.025f;
-    public const int MAX_LIVES = 3;
-    
-    [SerializeField] private int _currentLives = 1;
 
     public static event EventHandler Died;
+    public static event EventHandler LostInvincibility;
     
     protected override void Awake()
     {
@@ -60,10 +60,10 @@ public sealed class PlayerSpaceship : Spaceship
 
     private void TakeDamage()
     {
-        _currentLives -= 1;
-
-        if (_currentLives <= 0)
+        if (!isInvincible)
             Die();
+        else
+            isInvincible = false;
     }
 
     public override void Die()

@@ -65,8 +65,7 @@ MonoBehaviour:
   _disappearTimer: 0
   _respawnTimer: 0
   _availablePowerUps:
-  - {fileID: 11400000, guid: 7c4383edfbfbb69458841908b9507c35, type: 2}
-  - {fileID: 11400000, guid: 683bc4f883f59c5478fd92c704eb72a8, type: 2}
+  - {fileID: 11400000, guid: abe6c3aac5e48ce4381a62621b5d7505, type: 2}
   _currentPowerUp: {fileID: 0}
 --- !u!1 &6331579281759093590
 GameObject:

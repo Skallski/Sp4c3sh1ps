@@ -1,11 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 public abstract class Collectable : MonoBehaviour
 {
     private ScreenBounds _screenBounds;
 
-    protected virtual void Awake() => _screenBounds = ScreenBounds.Self;
+    protected virtual void Awake() => _screenBounds = ScreenBounds.Instance;
+
+    private void OnEnable() => PlayerSpaceship.Died += OnPlayerDied;
+
+    private void OnDisable() => PlayerSpaceship.Died -= OnPlayerDied;
 
     protected virtual void Start() => transform.position = _screenBounds.GetRandomScreenPosition();
     
@@ -15,5 +20,7 @@ public abstract class Collectable : MonoBehaviour
     {
         if (col.CompareTag("Player")) GetCollected();
     }
+    
+    private void OnPlayerDied(object sender, EventArgs e) => Destroy(gameObject);
     
 }

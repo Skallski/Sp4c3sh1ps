@@ -1,37 +1,44 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewPowerUpData", menuName = "Power Up/Slow Time")]
-public class SlowTimePowerUpData : PowerUpData
+public class SlowTimePowerUpData : TimeBasedPowerUpData
 {
-    private WaitForSeconds _slowTimeDuration;
+    private PlayerSpaceship _playerSpaceship;
     
-    private void Awake() => _slowTimeDuration = new WaitForSeconds(Duration);
-
     public override void ApplyPowerUp()
     {
-        // player moves slower
-        var playerSpaceship = PlayerSpaceship.Instance;
-        playerSpaceship.StartCoroutine(SlowSpaceshipDown(playerSpaceship));
+        _playerSpaceship = PlayerSpaceship.Instance;
         
-        // makes alive enemies move slower
+        var powerUpManager = PowerUpManager.Instance;
+        powerUpManager.StartPowerUp(StartTimeBasedPowerUp(SlowDown, SpeedUp), this);
+    }
+
+    private void SlowDown()
+    {
+        _playerSpaceship.MovementSpeed *= 0.5f;
+        _playerSpaceship.RotationSpeed *= 0.5f;
+
         var size = EnemySpaceship.Enemies.Count;
-        if (size == 0) return;
-        
-        for (var i = 0; i < size; i++)
+        for (int i = 0; i < size; i++)
         {
             var enemy = EnemySpaceship.Enemies[i];
-            enemy.StartCoroutine(SlowSpaceshipDown(enemy));
+            enemy.MovementSpeed *= 0.5f;
+            enemy.RotationSpeed *= 0.5f;
+        }
+    }
+
+    private void SpeedUp()
+    {
+        _playerSpaceship.MovementSpeed *= 2;
+        _playerSpaceship.RotationSpeed *= 2;
+        
+        var size = EnemySpaceship.Enemies.Count;
+        for (int i = 0; i < size; i++)
+        {
+            var enemy = EnemySpaceship.Enemies[i];
+            enemy.MovementSpeed *= 2;
+            enemy.RotationSpeed *= 2;
         }
     }
     
-    private IEnumerator SlowSpaceshipDown(Spaceship spaceship)
-    {
-        spaceship.MovementSpeed *= 0.5f;
-        spaceship.RotationSpeed *= 0.5f;
-        yield return _slowTimeDuration;
-        spaceship.MovementSpeed *= 0.5f;
-        spaceship.RotationSpeed *= 0.5f;
-    }
 }

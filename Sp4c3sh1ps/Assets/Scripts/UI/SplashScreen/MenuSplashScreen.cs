@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MenuSplashScreen : SplashScreen
 {
-    public static MenuSplashScreen Self { get; private set; }
+    public static MenuSplashScreen Instance { get; private set; }
     
     [SerializeField] private TextMeshProUGUI _lastScoreTmp, _highScoreTmp;
     private Button _startGameButton;
@@ -23,13 +23,13 @@ public class MenuSplashScreen : SplashScreen
 
     private void Awake()
     {
-        if (Self != null && Self != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
-            Self = this;
+            Instance = this;
 
             _animator = GetComponent<Animator>();
             _startGameButton = GetComponentInChildren<Button>();

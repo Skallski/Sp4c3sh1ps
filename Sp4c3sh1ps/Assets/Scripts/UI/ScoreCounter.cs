@@ -20,14 +20,14 @@ public class ScoreCounter : MonoBehaviour
 
     private void OnEnable()
     {
-        MenuSplashScreen.Self.GameStarted += OnGameStarted;
+        MenuSplashScreen.Instance.GameStarted += OnGameStarted;
         Point.Collected += OnPlayerCollectedPoint;
         PlayerSpaceship.Died += OnPlayerDied;
     }
 
     private void OnDisable()
     {
-        MenuSplashScreen.Self.GameStarted -= OnGameStarted;
+        MenuSplashScreen.Instance.GameStarted -= OnGameStarted;
         Point.Collected -= OnPlayerCollectedPoint;
         PlayerSpaceship.Died -= OnPlayerDied;
     }
@@ -45,7 +45,7 @@ public class ScoreCounter : MonoBehaviour
         _animator.Play("ScoreCounter_increment");
 
         if (_currentScore % 5 == 0)
-            ObjectSpawner.Self.SpawnEnemy(ScreenBounds.Self.GetRandomScreenPosition(), Quaternion.identity);
+            ObjectSpawner.Self.SpawnEnemy(ScreenBounds.Instance.GetRandomScreenPosition(), Quaternion.identity);
     }
     
     private void OnPlayerDied(object sender, EventArgs e)

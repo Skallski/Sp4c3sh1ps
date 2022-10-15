@@ -15,7 +15,7 @@ public abstract class Spaceship : MonoBehaviour
     protected virtual void Awake()
     {
         _gameControlsManager = GameControlsManager.Self;
-        _screenBounds = ScreenBounds.Self;
+        _screenBounds = ScreenBounds.Instance;
     }
 
     protected virtual void Start()
