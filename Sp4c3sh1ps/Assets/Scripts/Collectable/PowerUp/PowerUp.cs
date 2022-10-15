@@ -32,7 +32,7 @@ public class PowerUp : Collectable
     {
         base.Start();
         
-        Disappear();
+        Show();
     }
 
     protected override void GetCollected()
@@ -47,24 +47,20 @@ public class PowerUp : Collectable
         Respawn();
     }
 
-    private void SetPowerUp()
+    #region DISAPPEAR, RESPAWN, SHOW
+    private void Show()
     {
+        _powerUpObject.SetActive(true);
         _currentPowerUp = _availablePowerUps[Random.Range(0, _availablePowerUps.Count)];
         _sr.color = _currentPowerUp.PowerUpColor;
-    }
-
-    #region DISAPPEAR
-    private void Disappear()
-    {
-        SetPowerUp();
-
+        
         if (_disappearCoroutine != null)
             StopCoroutine(_disappearCoroutine);
         
-        _disappearCoroutine = StartCoroutine(DisappearRoutine());
+        _disappearCoroutine = StartCoroutine(Disappear());
     }
 
-    private IEnumerator DisappearRoutine()
+    private IEnumerator Disappear()
     {
         yield return _disappearDelay;
         
@@ -83,9 +79,7 @@ public class PowerUp : Collectable
         _disappearTimer = 0;
         Respawn();
     }
-    #endregion
-
-    #region RESPAWN
+    
     private void Respawn()
     {
         if (_respawnCoroutine != null)
@@ -106,9 +100,8 @@ public class PowerUp : Collectable
         }
         
         _respawnTimer = 0;
-        _powerUpObject.SetActive(true);
-        Disappear();
+        Show();
     }
     #endregion
-
+    
 }

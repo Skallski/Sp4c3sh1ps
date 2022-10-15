@@ -3,6 +3,8 @@ using UnityEngine;
 
 public sealed class PlayerSpaceship : Spaceship
 {
+    public static PlayerSpaceship Instance { get; private set; }
+
     private const float SPEED_INCREASE_PER_POINT = 0.025f;
     public const int MAX_LIVES = 3;
     
@@ -12,7 +14,16 @@ public sealed class PlayerSpaceship : Spaceship
     
     protected override void Awake()
     {
-        base.Awake();
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            
+            base.Awake();
+        }
     }
 
     private void OnEnable()
@@ -43,8 +54,8 @@ public sealed class PlayerSpaceship : Spaceship
 
     private void OnCollectedPoint(object sender, EventArgs e)
     {
-        _movementSpeed += SPEED_INCREASE_PER_POINT;
-        _rotationSpeed += SPEED_INCREASE_PER_POINT;
+        MovementSpeed += SPEED_INCREASE_PER_POINT;
+        RotationSpeed += SPEED_INCREASE_PER_POINT;
     }
 
     private void TakeDamage()

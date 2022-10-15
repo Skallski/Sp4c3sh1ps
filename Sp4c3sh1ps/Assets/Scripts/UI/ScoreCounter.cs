@@ -5,12 +5,18 @@ using UnityEngine;
 public class ScoreCounter : MonoBehaviour
 {
     private TextMeshProUGUI _scoreTmp;
-    public static int CurrentScore { get; private set; } = 0;
-    public static int HighScore { get; private set; } = 0;
+    private Animator _animator;
+
+    private int _currentScore = 0;
+    private int _highScore = 0;
 
     public static event EventHandler ScoreSubmited;
     
-    private void Awake() => _scoreTmp = GetComponent<TextMeshProUGUI>();
+    private void Awake()
+    {
+        _scoreTmp = GetComponent<TextMeshProUGUI>();
+        _animator = GetComponent<Animator>();
+    }
 
     private void OnEnable()
     {
@@ -28,27 +34,28 @@ public class ScoreCounter : MonoBehaviour
 
     private void OnGameStarted(object sender, EventArgs e)
     {
-        CurrentScore = 0;
-        _scoreTmp.SetText(CurrentScore.ToString());
+        _currentScore = 0;
+        _scoreTmp.SetText(_currentScore.ToString());
     }
     
     private void OnPlayerCollectedPoint(object sender, EventArgs e)
     {
-        CurrentScore += 1;
-        _scoreTmp.SetText(CurrentScore.ToString());
+        _currentScore += 1;
+        _scoreTmp.SetText(_currentScore.ToString());
+        _animator.Play("ScoreCounter_increment");
 
-        if (CurrentScore % 5 == 0)
-            EntitySpawner.Self.SpawnEnemy(ScreenBounds.Self.GetRandomScreenPosition(), Quaternion.identity);
+        if (_currentScore % 5 == 0)
+            ObjectSpawner.Self.SpawnEnemy(ScreenBounds.Self.GetRandomScreenPosition(), Quaternion.identity);
     }
     
     private void OnPlayerDied(object sender, EventArgs e)
     {
-        PlayerPrefs.SetInt("lastScore", CurrentScore);
+        PlayerPrefs.SetInt("lastScore", _currentScore);
         
-        if (CurrentScore > HighScore)
+        if (_currentScore > _highScore)
         {
-            HighScore = CurrentScore;
-            PlayerPrefs.SetInt("highscore", HighScore);
+            _highScore = _currentScore;
+            PlayerPrefs.SetInt("highscore", _highScore);
         }
         
         ScoreSubmited?.Invoke(this, EventArgs.Empty);

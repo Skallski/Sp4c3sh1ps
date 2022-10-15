@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewPowerUpData", menuName = "Power Up/Freeze Enemies")]
 public class FreezeEnemiesPowerUpData : PowerUpData
 {
-    private readonly WaitForSeconds _freezeTime = new WaitForSeconds(5);
-    
+    private WaitForSeconds _freezeTimeDuration;
+
+    private void Awake() => _freezeTimeDuration = new WaitForSeconds(Duration);
+
     public override void ApplyPowerUp()
     {
         // makes enemies immovable for 5 seconds
@@ -27,7 +30,7 @@ public class FreezeEnemiesPowerUpData : PowerUpData
     private IEnumerator FreezeEnemy(EnemySpaceship enemySpaceship)
     {
         enemySpaceship.canMove = false;
-        yield return _freezeTime;
+        yield return _freezeTimeDuration;
         enemySpaceship.canMove = true;
     }
 

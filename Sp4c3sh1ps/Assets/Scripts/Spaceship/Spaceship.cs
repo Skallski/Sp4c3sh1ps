@@ -7,7 +7,8 @@ public abstract class Spaceship : MonoBehaviour
     private ScreenBounds _screenBounds;
 
     [SerializeField] protected SpaceshipData _spaceshipData;
-    [SerializeField, ReadOnlyInspector] protected float _movementSpeed, _rotationSpeed;
+    [field: SerializeField, ReadOnlyInspector] public float MovementSpeed { get; set; }
+    [field: SerializeField, ReadOnlyInspector] public float RotationSpeed { get; set; }
 
     public bool canMove = true;
 
@@ -19,8 +20,8 @@ public abstract class Spaceship : MonoBehaviour
 
     protected virtual void Start()
     {
-        _movementSpeed = _spaceshipData.StartMovementSpeed;
-        _rotationSpeed = _spaceshipData.StartRotationSpeed;
+        MovementSpeed = _spaceshipData.StartMovementSpeed;
+        RotationSpeed = _spaceshipData.StartRotationSpeed;
         
         canMove = true;
     }
@@ -31,15 +32,18 @@ public abstract class Spaceship : MonoBehaviour
     {
         if (!canMove) return;
 
+        // move forward
         var tr = transform;
-        var movementPos = tr.position + tr.up * (_movementSpeed * Time.deltaTime);
+        var movementPos = tr.position + tr.up * (MovementSpeed * Time.deltaTime);
         
-        if (_screenBounds.IsOutOfBounds(tr.position))
+        if (_screenBounds.IsOutOfBounds(tr.position)) 
             movementPos = _screenBounds.CalculateWrappedPosition(tr);
+        
         transform.position = movementPos;
 
-        if (_gameControlsManager.Left) transform.eulerAngles += new Vector3(0, 0, 45 * (_rotationSpeed * Time.deltaTime));
-        if (_gameControlsManager.Right) transform.eulerAngles -= new Vector3(0, 0, 45 * (_rotationSpeed * Time.deltaTime));
+        // turn left or right
+        if (_gameControlsManager.Left) transform.eulerAngles += new Vector3(0, 0, 45 * (RotationSpeed * Time.deltaTime));
+        if (_gameControlsManager.Right) transform.eulerAngles -= new Vector3(0, 0, 45 * (RotationSpeed * Time.deltaTime));
     }
 
     public virtual void Die() => Instantiate(_spaceshipData.DestroyParticles, transform.position, Quaternion.identity);

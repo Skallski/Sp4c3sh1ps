@@ -1,9 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
-public sealed class EntitySpawner : MonoBehaviour
+public sealed class ObjectSpawner : MonoBehaviour
 {
-    public static EntitySpawner Self { get; private set; }
+    public static ObjectSpawner Self { get; private set; }
 
     [SerializeField] private GameObject _playerSpaceshipPrefab;
     [SerializeField] private GameObject _enemySpaceshipPrefab;
@@ -27,11 +27,9 @@ public sealed class EntitySpawner : MonoBehaviour
     }
     
     private void OnGameStarted(object sender, EventArgs e) => SpawnPlayer();
-    
-    private static GameObject Spawn(GameObject prefab, Vector2 position, Quaternion rotation) => Instantiate(prefab, position, rotation);
-    
+
+    private static void Spawn(GameObject prefab, Vector2 position, Quaternion rotation) => Instantiate(prefab, position, rotation);
     private void SpawnPlayer() => Spawn(_playerSpaceshipPrefab, Vector2.zero, Quaternion.identity);
-    
-    public GameObject SpawnEnemy(Vector2 position, Quaternion rotation) => Spawn(_enemySpaceshipPrefab, position, rotation);
+    public void SpawnEnemy(Vector2 position, Quaternion rotation) => Spawn(_enemySpaceshipPrefab, position, rotation);
 
 }
