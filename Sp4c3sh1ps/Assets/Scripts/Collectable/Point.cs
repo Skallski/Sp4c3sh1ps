@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class Point : Collectable
+public sealed class Point : Collectable
 {
     public static event EventHandler Collected;
 

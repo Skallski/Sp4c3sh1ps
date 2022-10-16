@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PowerUpManager : MonoBehaviour
@@ -13,6 +14,16 @@ public class PowerUpManager : MonoBehaviour
             Destroy(gameObject);
         else
             Instance = this;
+    }
+    
+    private void OnEnable() => PlayerSpaceship.Died += OnPlayerDied;
+
+    private void OnDisable() => PlayerSpaceship.Died -= OnPlayerDied;
+    
+    private void OnPlayerDied(object sender, EventArgs e)
+    {
+        if (_activeCoroutine != null)
+            StopCoroutine(_activeCoroutine);
     }
 
     public void StartPowerUp(IEnumerator coroutine)

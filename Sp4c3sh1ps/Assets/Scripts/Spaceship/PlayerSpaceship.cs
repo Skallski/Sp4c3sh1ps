@@ -5,6 +5,8 @@ using UnityEngine;
 public sealed class PlayerSpaceship : Spaceship
 {
     public static PlayerSpaceship Instance { get; private set; }
+
+    private Animator _animator;
     
     [ReadOnlyInspector] public bool isInvincible = false;
     private const float SPEED_INCREASE_PER_POINT = 0.025f;
@@ -22,6 +24,7 @@ public sealed class PlayerSpaceship : Spaceship
             Instance = this;
             
             base.Awake();
+            _animator = GetComponent<Animator>();
         }
     }
 
@@ -60,5 +63,11 @@ public sealed class PlayerSpaceship : Spaceship
         Died?.Invoke(this, EventArgs.Empty);
         Destroy(gameObject);
     }
+
+    #region ANIMATIONS
+    public void SetIdleAnimation() => _animator.Play("player_idle");
+    public void SetShieldAnimation() => _animator.Play("player_shield");
+    #endregion
+
 
 }

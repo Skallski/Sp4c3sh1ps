@@ -4826,6 +4826,7 @@ GameObject:
   - component: {fileID: 2220986696554848066}
   - component: {fileID: 2220986696554848060}
   - component: {fileID: 2220986696554848067}
+  - component: {fileID: 3559076898541235801}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -4871,7 +4872,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5031,9 +5032,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spaceshipData: {fileID: 11400000, guid: bb00adb6cf342ab4ab51ef9adb330dec, type: 2}
-  _movementSpeed: 0
-  _rotationSpeed: 0
-  _speedIncreaseValue: 0.025
+  <MovementSpeed>k__BackingField: 0
+  <RotationSpeed>k__BackingField: 0
+  canMove: 1
+  isSlowedDown: 0
+  isInvincible: 0
+--- !u!95 &3559076898541235801
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2220986696554848057}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 16d7aa0b29097a5449b2a969f7a6ca91, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3292822415168170806
 GameObject:
   m_ObjectHideFlags: 0

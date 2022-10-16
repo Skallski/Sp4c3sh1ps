@@ -33,4 +33,5 @@ public class PowerUpTimer : MonoBehaviour
     public void Hide() => _tmp.SetText(string.Empty);
 
     public void SetTimer(int time) => _tmp.SetText(time.ToString());
+    
 }

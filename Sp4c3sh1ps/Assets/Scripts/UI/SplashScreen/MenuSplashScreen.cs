@@ -15,6 +15,7 @@ public class MenuSplashScreen : SplashScreen
     private Animator _animator;
     private const string APPEAR_ANIM = "MenuSplash_appear";
     private const string DISAPPEAR_ANIM = "MenuSplash_disappear";
+    
     private Coroutine _disappearCoroutine;
     private readonly WaitForSeconds _hideDelay = new WaitForSeconds(0.5f);
     #endregion

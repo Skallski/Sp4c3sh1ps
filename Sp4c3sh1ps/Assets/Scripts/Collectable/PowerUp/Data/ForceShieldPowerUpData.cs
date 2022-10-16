@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewPowerUpData", menuName = "Power Up/Force Shield")]
-public class ForceShieldPowerUpData : TimeBasedPowerUpData
+public sealed class ForceShieldPowerUpData : TimeBasedPowerUpData
 {
     private PlayerSpaceship _playerSpaceship;
     
@@ -13,6 +13,16 @@ public class ForceShieldPowerUpData : TimeBasedPowerUpData
         powerUpManager.StartPowerUp(StartTimeBasedPowerUp(Enable, Disable));
     }
 
-    private void Enable() => _playerSpaceship.isInvincible = true;
-    private void Disable() => _playerSpaceship.isInvincible = false;
+    private void Enable()
+    {
+        _playerSpaceship.isInvincible = true;
+        _playerSpaceship.SetShieldAnimation();
+    }
+
+    private void Disable()
+    {
+        _playerSpaceship.isInvincible = false;
+        _playerSpaceship.SetIdleAnimation();
+    }
+    
 }

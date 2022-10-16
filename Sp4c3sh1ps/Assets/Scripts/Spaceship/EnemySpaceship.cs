@@ -9,7 +9,6 @@ public sealed class EnemySpaceship : Spaceship
     protected override void Awake()
     {
         Enemies.Add(this);
-        
         base.Awake();
     }
 
@@ -33,11 +32,11 @@ public sealed class EnemySpaceship : Spaceship
             Die();
     }
 
+    private void OnDestroy() => Enemies.Remove(this);
+
     public override void Die()
     {
         base.Die();
-        
-        Enemies.Remove(this);
         Destroy(gameObject);
     }
 

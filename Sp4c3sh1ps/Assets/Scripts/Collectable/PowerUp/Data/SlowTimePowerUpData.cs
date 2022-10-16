@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewPowerUpData", menuName = "Power Up/Slow Time")]
-public class SlowTimePowerUpData : TimeBasedPowerUpData
+public sealed class SlowTimePowerUpData : TimeBasedPowerUpData
 {
     private PlayerSpaceship _playerSpaceship;
     
@@ -22,10 +22,8 @@ public class SlowTimePowerUpData : TimeBasedPowerUpData
             _playerSpaceship.isSlowedDown = true;
         }
 
-        var size = EnemySpaceship.Enemies.Count;
-        for (int i = 0; i < size; i++)
+        foreach (var enemy in EnemySpaceship.Enemies)
         {
-            var enemy = EnemySpaceship.Enemies[i];
             if (!enemy.isSlowedDown) // can slow down once at single time
             {
                 enemy.MovementSpeed *= 0.5f;
@@ -41,10 +39,8 @@ public class SlowTimePowerUpData : TimeBasedPowerUpData
         _playerSpaceship.RotationSpeed *= 2;
         _playerSpaceship.isSlowedDown = false;
         
-        var size = EnemySpaceship.Enemies.Count;
-        for (int i = 0; i < size; i++)
+        foreach (var enemy in EnemySpaceship.Enemies)
         {
-            var enemy = EnemySpaceship.Enemies[i];
             enemy.MovementSpeed *= 2;
             enemy.RotationSpeed *= 2;
             enemy.isSlowedDown = false;
