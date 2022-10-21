@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.VFX;
 
 [CreateAssetMenu(fileName = "NewSpaceshipData", menuName = "Spaceship Data")]
 public class SpaceshipData : ScriptableObject
@@ -9,6 +10,6 @@ public class SpaceshipData : ScriptableObject
     [SerializeField] private float _startRotationSpeed = 2;
     public float StartRotationSpeed => _startRotationSpeed;
 
-    [SerializeField] private ParticleSystem _destroyParticles;
-    public ParticleSystem DestroyParticles => _destroyParticles;
+    [SerializeField] private GameObject _destroyVfx;
+    public GameObject DestroyVfx => _destroyVfx;
 }

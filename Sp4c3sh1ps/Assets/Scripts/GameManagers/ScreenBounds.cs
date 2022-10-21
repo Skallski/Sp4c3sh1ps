@@ -35,9 +35,9 @@ public sealed class ScreenBounds : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Finds random position within camera bounds
     /// </summary>
-    /// <returns></returns>
+    /// <returns> found position </returns>
     public Vector2 GetRandomScreenPosition()
     {
         var bBox = _boundingBox.size;

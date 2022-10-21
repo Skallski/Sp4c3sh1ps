@@ -6,6 +6,7 @@ public abstract class Spaceship : MonoBehaviour
     private GameControlsManager _gameControlsManager;
     private ScreenBounds _screenBounds;
 
+    #region INSPECTOR FIELDS
     [SerializeField] protected SpaceshipData _spaceshipData;
     [field: SerializeField, ReadOnlyInspector] public float MovementSpeed { get; set; }
     [field: SerializeField, ReadOnlyInspector] public float RotationSpeed { get; set; }
@@ -13,7 +14,8 @@ public abstract class Spaceship : MonoBehaviour
     [Space]
     [ReadOnlyInspector] public bool canMove = true;
     [ReadOnlyInspector] public bool isSlowedDown = false;
-
+    #endregion
+    
     protected virtual void Awake()
     {
         _gameControlsManager = GameControlsManager.Self;
@@ -48,6 +50,9 @@ public abstract class Spaceship : MonoBehaviour
         if (_gameControlsManager.Right) transform.eulerAngles -= new Vector3(0, 0, 45 * (RotationSpeed * Time.deltaTime));
     }
 
-    public virtual void Die() => Instantiate(_spaceshipData.DestroyParticles, transform.position, Quaternion.identity);
-    
+    public virtual void Die()
+    {
+        var destroyVfxInstance = Instantiate(_spaceshipData.DestroyVfx, transform.position, Quaternion.identity);
+        Destroy(destroyVfxInstance, 1f);
+    }
 }

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startMovementSpeed: 1
   _startRotationSpeed: 1
-  _destroyParticles: {fileID: 274467426301808068, guid: 3eb48a608d30b4c4ba5d246ea92c06d2, type: 3}
+  _destroyVfx: {fileID: 5304195956399799603, guid: 73729ba168c4ba04b9fde92b2fba780f, type: 3}

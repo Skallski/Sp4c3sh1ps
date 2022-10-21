@@ -8,8 +8,8 @@ public sealed class PlayerSpaceship : Spaceship
 
     private Animator _animator;
     
-    [ReadOnlyInspector] public bool isInvincible = false;
     private const float SPEED_INCREASE_PER_POINT = 0.025f;
+    [ReadOnlyInspector] public bool isInvincible = false;
 
     public static event EventHandler Died;
 
@@ -68,6 +68,5 @@ public sealed class PlayerSpaceship : Spaceship
     public void SetIdleAnimation() => _animator.Play("player_idle");
     public void SetShieldAnimation() => _animator.Play("player_shield");
     #endregion
-
 
 }
