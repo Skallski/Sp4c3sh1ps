@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ScoreCounter : MonoBehaviour
 {
+    private MenuSplashScreen _menuSplashScreen;
+    
     private TextMeshProUGUI _scoreTmp;
     private Animator _animator;
 
@@ -14,20 +16,22 @@ public class ScoreCounter : MonoBehaviour
     
     private void Awake()
     {
+        _menuSplashScreen = MenuSplashScreen.Instance;
+        
         _scoreTmp = GetComponent<TextMeshProUGUI>();
         _animator = GetComponent<Animator>();
     }
 
     private void OnEnable()
     {
-        MenuSplashScreen.Instance.GameStarted += OnGameStarted;
+        _menuSplashScreen.GameStarted += OnGameStarted;
         Point.Collected += OnPlayerCollectedPoint;
         PlayerSpaceship.Died += OnPlayerDied;
     }
 
     private void OnDisable()
     {
-        MenuSplashScreen.Instance.GameStarted -= OnGameStarted;
+        _menuSplashScreen.GameStarted -= OnGameStarted;
         Point.Collected -= OnPlayerCollectedPoint;
         PlayerSpaceship.Died -= OnPlayerDied;
     }
@@ -45,7 +49,7 @@ public class ScoreCounter : MonoBehaviour
         _animator.Play("ScoreCounter_increment");
 
         if (_currentScore % 5 == 0)
-            ObjectSpawner.Self.SpawnEnemy(ScreenBounds.Instance.GetRandomScreenPosition(), Quaternion.identity);
+            ObjectSpawner.Self.SpawnEnemy();
     }
     
     private void OnPlayerDied(object sender, EventArgs e)

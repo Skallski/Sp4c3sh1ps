@@ -1,6 +1,6 @@
 ﻿using System;
-using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public sealed class ObjectSpawner : MonoBehaviour
 {
@@ -36,15 +36,18 @@ public sealed class ObjectSpawner : MonoBehaviour
 
     private void OnGameStarted(object sender, EventArgs e)
     {
-        SpawnPlayer();
+        var spawnRotation = Quaternion.identity;
+        SpawnObject(_playerSpaceshipPrefab, Vector2.zero, spawnRotation); // spawn player
+        SpawnObject(_pointPrefab, _screenBounds.GetRandomScreenPosition(), spawnRotation); // spawn point
+        SpawnObject(_powerUpPrefab, _screenBounds.GetRandomScreenPosition(), spawnRotation); // spawn power up
         
-        Spawn(_pointPrefab, _screenBounds.GetRandomScreenPosition(), quaternion.identity);
-        Spawn(_powerUpPrefab, _screenBounds.GetRandomScreenPosition(), quaternion.identity);
+        SpawnEnemy();
     }
 
-    private static void Spawn(GameObject prefab, Vector2 position, Quaternion rotation) => Instantiate(prefab, position, rotation);
+    private static void SpawnObject(GameObject prefab, Vector2 position, Quaternion rotation) =>
+        Instantiate(prefab, position, rotation);
     
-    private void SpawnPlayer() => Spawn(_playerSpaceshipPrefab, Vector2.zero, Quaternion.identity);
-    public void SpawnEnemy(Vector2 position, Quaternion rotation) => Spawn(_enemySpaceshipPrefab, position, rotation);
-
+    public void SpawnEnemy() =>
+        SpawnObject(_enemySpaceshipPrefab, _screenBounds.GetRandomScreenPosition(),
+            Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360))));
 }

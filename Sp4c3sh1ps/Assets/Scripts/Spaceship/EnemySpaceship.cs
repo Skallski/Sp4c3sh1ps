@@ -37,6 +37,8 @@ public sealed class EnemySpaceship : Spaceship
     public override void Die()
     {
         base.Die();
+        ScreenRipple.Instance.BeginRipple(transform.position);
+        
         Destroy(gameObject);
     }
 
